@@ -41,16 +41,69 @@ for (let i = 0; i < gridSize * gridSize; i++) {
     const percBasis = 100 / gridSize;
     gridPiece.style.flexBasis = `${percBasis}%`;
 
-    // Click handler for selecting a cell
-    gridPiece.addEventListener("click", () => {
-        gridPiece.classList.toggle("chosenCell");
-    })
-
-    // Hover effect for changing color gives a real drawing effect
-    gridPiece.addEventListener("mouseover", () => {
-        const randColor = getRandomNumberForColor();
-        gridPiece.style.backgroundColor = `rgb(${randColor.toString()})`;
-    })
 }
 
 mainContainer.classList.toggle("#mainContainer");
+
+/**
+ * Flips the disabled status of the Play Game and Reset Game buttons
+ */
+function setButtonEnablement() {
+    const playBtn = document.querySelector("#playGame");
+    const resetBtn = document.querySelector("#resetGame");
+
+    playBtn.disabled = !playBtn.disabled;
+    resetBtn.disabled = !resetBtn.disabled;
+}
+
+/**
+ * mouseover Event handler that adds color to a cell
+ * - This is needed so I can remove it later when I reset the cell
+ * @param {object} cell The event object for a mouseover event
+ */
+function addColor(cell) {
+    const randColor = getRandomNumberForColor();
+    cell.target.style.backgroundColor = `rgb(${randColor.toString()})`;
+}
+
+/**
+ * Enables the cells to be colored in when hovered over and
+ * set the cursor to the pointer finger
+ */
+function enableGrid() {
+    // Start the grid
+    const gridCells = document.querySelectorAll("#gridPiece");
+    gridCells.forEach((cell) => {
+        cell.style.cursor = "pointer";
+        cell.addEventListener("mouseover", addColor);
+    })
+}
+
+/**
+ * Helper to set the color of the cells to white and clears the mouseover event handler
+ */
+function clearCells() {
+    const gridCells = document.querySelectorAll("#gridPiece");
+    gridCells.forEach((cell) => {
+        cell.style.cursor = "auto";
+        cell.style.backgroundColor = "white";
+        cell.removeEventListener("mouseover", addColor);
+    })
+}
+
+/**
+ * Calls the helpers that allow the game to be played
+ */
+function playGame() {
+        setButtonEnablement();
+
+        enableGrid();
+}
+
+/**
+ * Resets the game board so the user can start fresh
+ */
+function resetGame() {
+    setButtonEnablement();
+    clearCells();
+}
