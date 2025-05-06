@@ -13,16 +13,18 @@ const gridSize = DEFAULT_GRID_SIZE;
 // Will later add a piece to get user input on grid size
 // And set gridSize here with their input if they give it
 
-// Set the width and height of the main container to the grid size in css
-mainContainer.style.width = `${gridSize*50}px`;
-
 // Create all the grid pieces and attach them to the Main Container
 for (let i = 0; i < gridSize * gridSize; i++) {
     const gridPiece = document.createElement("div");
     gridPiece.id = "gridPiece";
     gridPiece.textContent = i+1;
     mainContainer.appendChild(gridPiece);
-    gridPiece.classList.toggle("#gridPiece");
+    gridPiece.classList.toggle("gridPiece");
+
+    // Set the flex basis as a percentage for each cell
+    // To get the cells to fit the container at the correct width
+    const percBasis = 100 / gridSize;
+    gridPiece.style.flexBasis = `${percBasis}%`;
 
     gridPiece.addEventListener("click", () => {
         gridPiece.classList.toggle("chosenCell");
@@ -30,9 +32,3 @@ for (let i = 0; i < gridSize * gridSize; i++) {
 }
 
 mainContainer.classList.toggle("#mainContainer");
-
-
-
-// So you might be able to do something like setting the flex basis by pixel on the parent container
-// to limit the size of the box then 
-// set the height and width to max out that size?
