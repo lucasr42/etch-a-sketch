@@ -4,6 +4,21 @@
 
 DEFAULT_GRID_SIZE = 16;
 
+/**
+ * Produces 3 numbers within 0-255 for an RGB color schema
+ * @returns An array with 3 numbers
+ */
+function getRandomNumberForColor() {
+    const min = 0;
+    const max = 255;
+    const nums = [];
+    for (let i = 0; i < 3; i++) {
+        nums.push(Math.floor(Math.random() * (max - min + 1))) + min;
+    }
+    return nums;
+}
+
+
 // Grab the main container from HTML
 const mainContainer = document.querySelector("#mainContainer");
 
@@ -26,8 +41,15 @@ for (let i = 0; i < gridSize * gridSize; i++) {
     const percBasis = 100 / gridSize;
     gridPiece.style.flexBasis = `${percBasis}%`;
 
+    // Click handler for selecting a cell
     gridPiece.addEventListener("click", () => {
         gridPiece.classList.toggle("chosenCell");
+    })
+
+    // Hover effect for changing color gives a real drawing effect
+    gridPiece.addEventListener("mouseover", () => {
+        const randColor = getRandomNumberForColor();
+        gridPiece.style.backgroundColor = `rgb(${randColor.toString()})`;
     })
 }
 
