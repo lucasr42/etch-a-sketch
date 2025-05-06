@@ -14,8 +14,9 @@
     /* padding: 10px; */
     height: 50px;
     width: 50px;
+    cursor: pointer;
 }
 
-#chosenCell {
+.chosenCell {
     background-color: blueviolet;
 }

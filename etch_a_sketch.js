@@ -25,7 +25,7 @@ for (let i = 0; i < gridSize * gridSize; i++) {
     gridPiece.classList.toggle("#gridPiece");
 
     gridPiece.addEventListener("click", () => {
-        gridPiece.classList.toggle("#chosenCell");
+        gridPiece.classList.toggle("chosenCell");
     })
 }
 
