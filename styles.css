@@ -1,0 +1,21 @@
+#mainContainer {
+    border: black solid 1px;
+    display: flex;
+    flex-wrap: wrap;
+    /* Set width in JS */
+}
+
+#gridPiece {
+    border: pink dashed 1px;
+    box-sizing: border-box;
+    /* flex: 1 1 160px; */
+    flex: auto;
+    /* margin: 10px; */
+    /* padding: 10px; */
+    height: 50px;
+    width: 50px;
+}
+
+#chosenCell {
+    background-color: blueviolet;
+}
