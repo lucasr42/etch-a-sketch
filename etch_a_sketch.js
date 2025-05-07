@@ -22,11 +22,19 @@ function getRandomNumberForColor() {
 // Grab the main container from HTML
 const mainContainer = document.querySelector("#mainContainer");
 
-const gridSize = DEFAULT_GRID_SIZE;
+let gridSize = DEFAULT_GRID_SIZE;
 
-
-// Will later add a piece to get user input on grid size
-// And set gridSize here with their input if they give it
+const gridChoice = document.querySelector("#gridSize");
+gridChoice.addEventListener("click", () => {
+    const userInput = prompt("Choose a number between 1 - 100:");
+    while (userInput <= 0 || userInput > 100) {
+        userInput = prompt(`${userInput} is outside of the acceptable range. Please enter a number between 1 - 100.`);
+    }
+    console.log("userInput", userInput);
+    gridSize = userInput;
+    console.log("gridSize in event listener: ", gridSize);
+})
+console.log("gridSize after event listener. Did it change? ", gridSize);
 
 // Create all the grid pieces and attach them to the Main Container
 for (let i = 0; i < gridSize * gridSize; i++) {

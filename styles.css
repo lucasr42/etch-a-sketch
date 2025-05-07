@@ -1,3 +1,20 @@
+h1 {
+    text-align: center;    
+    color: blueviolet;
+    font-size: 300%;
+    text-decoration: underline;
+}
+
+.subheader {
+    text-align: center;
+    color: blue;
+    size: 200%;
+}
+
+.playButtons {
+    text-align: center;
+}
+
 #mainContainer {
     border: black solid 1px;
     display: flex;
@@ -8,10 +25,9 @@
 #gridPiece {
     border: pink dashed 1px;
     box-sizing: border-box;
-    /* cursor: pointer; */
     aspect-ratio: 1/1;
 }
 
-.chosenCell {
+/* .chosenCell {
     background-color: blueviolet;
-}
+} */
