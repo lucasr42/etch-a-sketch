@@ -17,9 +17,17 @@ function getRandomNumberForColor() {
 /**
  * Flips the disabled status of the Play Game and Reset Game buttons
  */
-function setButtonEnablement() {
+function setButtonEnablement(reset=false) {
     const playBtn = document.querySelector("#playGame");
     const resetBtn = document.querySelector("#resetGame");
+    
+    if (reset) {
+        if (!playBtn.disabled && resetBtn.disabled) {
+            playBtn.disabled = !playBtn.disabled;
+            resetBtn.disabled = !resetBtn.disabled;
+        }
+        return;
+    }
 
     playBtn.disabled = !playBtn.disabled;
     resetBtn.disabled = !resetBtn.disabled;
@@ -137,6 +145,7 @@ function getGridSize() {
         userInput = prompt(`${userInput} is outside of the acceptable range. Please enter a number between 1 - 100.`);
     }
     buildGrid(userInput);
+    setButtonEnablement(reset=true);
     enableGrid();
 }
 
