@@ -141,8 +141,15 @@ function resetGame() {
  */
 function getGridSize() {
     let userInput = prompt("Choose a number between 1 - 100:");
-    while (userInput <= 0 || userInput > 100) {
-        userInput = prompt(`${userInput} is outside of the acceptable range. Please enter a number between 1 - 100.`);
+    let convertedInput = Number(userInput);
+    while (Number.isNaN(convertedInput) || convertedInput <= 0 || convertedInput > 100) {
+        if (Number.isNaN(convertedInput)) {
+            userInput = prompt(`${userInput} is not a number. Please enter a number between 1 - 100.`);
+            convertedInput = Number(userInput);
+        } else if (userInput <= 0 || userInput > 100) {
+            userInput = prompt(`${userInput} is outside of the acceptable range. Please enter a number between 1 - 100.`);
+            convertedInput = Number(userInput);
+        }
     }
     buildGrid(userInput);
     setButtonEnablement(reset=true);
