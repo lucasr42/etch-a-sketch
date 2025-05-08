@@ -86,7 +86,6 @@ function buildGrid(size, reset = false) {
     for (let i = 0; i < size * size; i++) {
         const gridPiece = document.createElement("div");
         gridPiece.id = "gridPiece";
-        gridPiece.textContent = i+1;
         mainContainer.appendChild(gridPiece);
         gridPiece.classList.toggle("gridPiece");
     
