@@ -19,12 +19,10 @@ h1 {
     border: black solid 1px;
     display: flex;
     flex-wrap: wrap;
-    /* Set width in JS */
 }
 
 #gridPiece {
     border: black dashed 1px;
     box-sizing: border-box;
     aspect-ratio: 1/1;
-    /* opacity: .1; */
 }

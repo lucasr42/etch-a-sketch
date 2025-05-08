@@ -63,6 +63,10 @@ function removeGrid() {
     const gridPieces = document.querySelectorAll("#gridPiece");
     const pieces = [...gridPieces];
     pieces.forEach((piece) => {
+        // Trying to get the squares to cascade out off the screen but I'm gonna need to read 
+        // a bit more about how the darn animation feature works
+        // console.log("piece: ", piece.style);
+        // piece.style.animation = "3s ease-in 1s  2 reverse both paused slide-in";
         piece.parentElement.removeChild(piece);
     })
 }
@@ -74,7 +78,8 @@ function clearCells() {
     const gridCells = document.querySelectorAll("#gridPiece");
     gridCells.forEach((cell) => {
         cell.style.cursor = "auto";
-        cell.style.backgroundColor = "white";
+        cell.style.backgroundColor = "";
+        cell.style.opacity = "";
         cell.removeEventListener("mouseover", addColor);
     })
 }
@@ -83,8 +88,8 @@ function clearCells() {
  * Used to build a grid from the DEFAULT size or the user chosen size
  * @param {int} size Number of cells for one row
  */
-function buildGrid(size, reset = false) {
-    if (reset && size !== DEFAULT_GRID_SIZE) {
+function buildGrid(size) {
+    if (size !== DEFAULT_GRID_SIZE) {
         removeGrid();
     }
     // Grab the main container from HTML
@@ -103,10 +108,6 @@ function buildGrid(size, reset = false) {
         gridPiece.style.flexBasis = `${percBasis}%`;        
     }
     mainContainer.classList.toggle("#mainContainer");
-
-    if (reset) {
-        enableGrid();
-    }
 }
 
 /**
@@ -131,11 +132,12 @@ function resetGame() {
  * Lets a user choose how many grid cells they want in a row
  */
 function getGridSize() {
-    const userInput = prompt("Choose a number between 1 - 100:");
+    let userInput = prompt("Choose a number between 1 - 100:");
     while (userInput <= 0 || userInput > 100) {
         userInput = prompt(`${userInput} is outside of the acceptable range. Please enter a number between 1 - 100.`);
     }
-    buildGrid(userInput, reset=true);
+    buildGrid(userInput);
+    enableGrid();
 }
 
 // Builds the original grid because I want it on the screen all the time
