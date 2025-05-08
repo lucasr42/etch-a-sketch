@@ -27,12 +27,20 @@ function setButtonEnablement() {
 
 /**
  * mouseover Event handler that adds color to a cell
+ * Also increasing the opacity by 10% every time a cell is moused over
  * - This is needed so I can remove it later when I reset the cell
  * @param {object} cell The event object for a mouseover event
  */
 function addColor(cell) {
     const randColor = getRandomNumberForColor();
     cell.target.style.backgroundColor = `rgb(${randColor.toString()})`;
+    
+    const baseOpacity = .1;
+    const currOpacity = cell.target.style.opacity;
+    if (Number(currOpacity) < 1) {
+        const newOpacity = Number(currOpacity) + baseOpacity;;
+        cell.target.style.opacity = newOpacity;
+    }
 }
 
 /**
@@ -92,7 +100,7 @@ function buildGrid(size, reset = false) {
         // Set the flex basis as a percentage for each cell
         // To get the cells to fit the container at the correct width
         const percBasis = 100 / size;
-        gridPiece.style.flexBasis = `${percBasis}%`;
+        gridPiece.style.flexBasis = `${percBasis}%`;        
     }
     mainContainer.classList.toggle("#mainContainer");
 
