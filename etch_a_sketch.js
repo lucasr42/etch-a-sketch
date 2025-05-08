@@ -40,12 +40,9 @@ function addColor(cell) {
  * set the cursor to the pointer finger
  */
 function enableGrid() {
-    console.log("enabling grid");
     // Start the grid
     const gridCells = document.querySelectorAll("#gridPiece");
-    console.log("all the cells: ", gridCells);
     gridCells.forEach((cell) => {
-        console.log("adding styles");
         cell.style.cursor = "pointer";
         cell.addEventListener("mouseover", addColor);
     })
@@ -80,9 +77,7 @@ function clearCells() {
  */
 function buildGrid(size, reset = false) {
     if (reset && size !== DEFAULT_GRID_SIZE) {
-        console.log("reseting container size");
         removeGrid();
-        enableGrid();
     }
     // Grab the main container from HTML
     const mainContainer = document.querySelector("#mainContainer");
@@ -101,6 +96,10 @@ function buildGrid(size, reset = false) {
         gridPiece.style.flexBasis = `${percBasis}%`;
     }
     mainContainer.classList.toggle("#mainContainer");
+
+    if (reset) {
+        enableGrid();
+    }
 }
 
 /**
