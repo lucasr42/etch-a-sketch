@@ -1,7 +1,3 @@
-// Get the container div from the html
-// Create a 16 x 16 grid of divs
-// Style the container and grid divs with flex
-
 DEFAULT_GRID_SIZE = 16;
 
 /**
@@ -17,41 +13,6 @@ function getRandomNumberForColor() {
     }
     return nums;
 }
-
-
-// Grab the main container from HTML
-const mainContainer = document.querySelector("#mainContainer");
-
-let gridSize = DEFAULT_GRID_SIZE;
-
-const gridChoice = document.querySelector("#gridSize");
-gridChoice.addEventListener("click", () => {
-    const userInput = prompt("Choose a number between 1 - 100:");
-    while (userInput <= 0 || userInput > 100) {
-        userInput = prompt(`${userInput} is outside of the acceptable range. Please enter a number between 1 - 100.`);
-    }
-    console.log("userInput", userInput);
-    gridSize = userInput;
-    console.log("gridSize in event listener: ", gridSize);
-})
-console.log("gridSize after event listener. Did it change? ", gridSize);
-
-// Create all the grid pieces and attach them to the Main Container
-for (let i = 0; i < gridSize * gridSize; i++) {
-    const gridPiece = document.createElement("div");
-    gridPiece.id = "gridPiece";
-    gridPiece.textContent = i+1;
-    mainContainer.appendChild(gridPiece);
-    gridPiece.classList.toggle("gridPiece");
-
-    // Set the flex basis as a percentage for each cell
-    // To get the cells to fit the container at the correct width
-    const percBasis = 100 / gridSize;
-    gridPiece.style.flexBasis = `${percBasis}%`;
-
-}
-
-mainContainer.classList.toggle("#mainContainer");
 
 /**
  * Flips the disabled status of the Play Game and Reset Game buttons
@@ -79,11 +40,25 @@ function addColor(cell) {
  * set the cursor to the pointer finger
  */
 function enableGrid() {
+    console.log("enabling grid");
     // Start the grid
     const gridCells = document.querySelectorAll("#gridPiece");
+    console.log("all the cells: ", gridCells);
     gridCells.forEach((cell) => {
+        console.log("adding styles");
         cell.style.cursor = "pointer";
         cell.addEventListener("mouseover", addColor);
+    })
+}
+
+/**
+ * Used to remove the grid from the screen when reseting with a new board size
+ */
+function removeGrid() {
+    const gridPieces = document.querySelectorAll("#gridPiece");
+    const pieces = [...gridPieces];
+    pieces.forEach((piece) => {
+        piece.parentElement.removeChild(piece);
     })
 }
 
@@ -100,12 +75,42 @@ function clearCells() {
 }
 
 /**
+ * Used to build a grid from the DEFAULT size or the user chosen size
+ * @param {int} size Number of cells for one row
+ */
+function buildGrid(size, reset = false) {
+    if (reset && size !== DEFAULT_GRID_SIZE) {
+        console.log("reseting container size");
+        removeGrid();
+        enableGrid();
+    }
+    // Grab the main container from HTML
+    const mainContainer = document.querySelector("#mainContainer");
+    
+    // Create the grid
+    for (let i = 0; i < size * size; i++) {
+        const gridPiece = document.createElement("div");
+        gridPiece.id = "gridPiece";
+        gridPiece.textContent = i+1;
+        mainContainer.appendChild(gridPiece);
+        gridPiece.classList.toggle("gridPiece");
+    
+        // Set the flex basis as a percentage for each cell
+        // To get the cells to fit the container at the correct width
+        const percBasis = 100 / size;
+        gridPiece.style.flexBasis = `${percBasis}%`;
+    }
+    mainContainer.classList.toggle("#mainContainer");
+}
+
+/**
  * Calls the helpers that allow the game to be played
  */
 function playGame() {
-        setButtonEnablement();
-
-        enableGrid();
+    // Flips the Play and Reset buttons
+    setButtonEnablement();
+    // Turns on the etch a sketch
+    enableGrid();
 }
 
 /**
@@ -115,3 +120,17 @@ function resetGame() {
     setButtonEnablement();
     clearCells();
 }
+
+/**
+ * Lets a user choose how many grid cells they want in a row
+ */
+function getGridSize() {
+    const userInput = prompt("Choose a number between 1 - 100:");
+    while (userInput <= 0 || userInput > 100) {
+        userInput = prompt(`${userInput} is outside of the acceptable range. Please enter a number between 1 - 100.`);
+    }
+    buildGrid(userInput, reset=true);
+}
+
+// Builds the original grid because I want it on the screen all the time
+buildGrid(DEFAULT_GRID_SIZE);
